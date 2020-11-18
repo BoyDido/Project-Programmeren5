@@ -9,8 +9,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 @Injectable({ providedIn: 'root'})
 export class BackendAppService {
 
-    private usersUrl = 'https://glitch.com/~phantom-cord-perch';  // URL to web api
-    private notesUrl = 'https://glitch.com/~phantom-cord-perch';  // URL to web api
+    private usersUrl = 'https://glitch.com/~ubiquitous-distinct-friday';  // URL to web api
+    private notesUrl = 'https://glitch.com/~ubiquitous-distinct-friday';  // URL to web api
     httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
