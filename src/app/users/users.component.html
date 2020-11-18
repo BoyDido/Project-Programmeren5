@@ -1,0 +1,27 @@
+<h2>My Users</h2>
+
+<div>
+  <label>User name:
+    <input #username />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(username.value); username.value=''">
+    add
+  </button>
+</div>
+
+<ul class='users'>
+  <li *ngFor="let user of users" >
+    <a routerLink="/user-notes/{{user.id}}">
+      <span class="badge">{{user.id}}</span> {{user.username}} 
+    </a> 
+    <button class="delete" title="delete user"
+      (click)="delete(user)">x</button>
+  </li>
+</ul>
+
+
+
+
+
+ 
