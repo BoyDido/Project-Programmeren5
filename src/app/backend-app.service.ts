@@ -8,23 +8,25 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root'})
 export class BackendAppService {
+    constructor(private http: HttpClient, private messageService: MessageService) { }
 
-    private usersUrl = 'https://glitch.com/~ubiquitous-distinct-friday';  // URL to web api
+    // werkt wel met  'https://jensjorisdecorte-backend-example-5.glitch.me/'
+    private usersUrl = 'https://boydido-ubiquitous-distinct-friday.glitch.me/';  // URL to web api
     private notesUrl = 'https://glitch.com/~ubiquitous-distinct-friday';  // URL to web api
+    
     httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-
-    constructor(private http: HttpClient, private messageService: MessageService) { }
+  
     
-    getUsers =() => {
-      return this.http.get<User[]>(this.usersUrl).pipe(tap(_ => this.log('fetched users')),
+    getUsers =() :Observable<User[]> => {
+      return this.http.get<User[]>(`${this.usersUrl}/users`).pipe(tap(_ => this.log('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
       ); 
     }
     
     getUser(id: number): Observable<User> {
-      return this.http.get<User>('${this.usersUrl}/${id}').pipe(
+      return this.http.get<User>(`${this.usersUrl}/${id}`).pipe(
         tap(_ => this.log(`fetched user id=${id}`)),
         catchError(this.handleError<User>(`getUser id=${id}`))
       );
@@ -32,14 +34,14 @@ export class BackendAppService {
 
       /** PUT: update the user on the server */
     updateUser(user: User): Observable<any> {
-      return this.http.put((this.usersUrl), user, this.httpOptions).pipe(
+      return this.http.put((this.usersUrl), user).pipe(
         tap(_ => this.log(`updated user id=${user.id}`)),
         catchError(this.handleError<any>('updateUser'))
       );
     }
 
     postUsers = (user: User) =>  {
-      return this.http.post<User>(this.usersUrl, user).pipe(
+      return this.http.post<User>(`${this.usersUrl}/users`, user).pipe(
         tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
         catchError(this.handleError<User>('addUser'))
       );
@@ -61,22 +63,22 @@ export class BackendAppService {
     }
 
     getNote(id: number): Observable<Note> {
-      return this.http.get<Note>('${this.notesUrl}/${id}').pipe(
+      return this.http.get<Note>(`${this.usersUrl}/${id}`).pipe(
         tap(_ => this.log(`fetched note id=${id}`)),
         catchError(this.handleError<Note>(`getNote id=${id}`))
       );
     }
 
     postNotes(note: any):Observable<any> {
-      return this.http.post('https://glitch.com/~phantom-cord-perch/user', note)
+      return this.http.post(this.usersUrl, note)
     }
     
     patchNote(adjustNote){ 
-      return this.http.patch('https://glitch.com/~phantom-cord-perch/user', adjustNote)
+      return this.http.patch(this.usersUrl, adjustNote)
     }
 
     deleteNote(id: number): Observable<{}>{
-      const urlbase = 'https://glitch.com/~phantom-cord-perch/user';
+      const urlbase = (this.usersUrl);
       const url = urlbase + '/' + [id];
       return this.http.delete(url);
     }
