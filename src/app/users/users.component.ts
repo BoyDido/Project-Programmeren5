@@ -35,7 +35,10 @@ constructor(private backendappService: BackendAppService) { }
       
   delete(name : string): void {
       this.backendappService.deleteUser(name).subscribe((result)=> {
-        this.backendappService.getUsers().subscribe(users => this.users = users);
+        console.log(result);
+        this.backendappService.getUsers().subscribe(users => {this.users = users; 
+          console.log(users)})
+        
       });
       
   }

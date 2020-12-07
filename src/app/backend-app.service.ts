@@ -51,6 +51,7 @@ export class BackendAppService {
     }
     
     deleteUser = (name : string): Observable<User> =>{
+      console.log(name);
       return this.http.get<User>(`${this.usersUrl}/remove?name=${name}`).pipe(
         tap(_ => this.log(`deleted user name=${name}`)),
         catchError(this.handleError<User>('deleteUser'))

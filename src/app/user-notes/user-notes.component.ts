@@ -26,7 +26,7 @@ export class UserNotesComponent implements OnInit {
   /** haal user op uit http action */ //werkt
   getUser(): void {
     const id = +this.route.snapshot.paramMap.get('id'); 
-    this.backendappService.getUser(id).subscribe(user => this.user = user);
+    this.backendappService.getUser(id).subscribe(user => {this.user = user; console.log(user)});
   }
 
   getNote(): void {
