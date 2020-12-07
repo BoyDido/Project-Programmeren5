@@ -8,6 +8,7 @@ import { UserNotesComponent } from './user-notes/user-notes.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
+import { UserSearchComponent } from './user-search/user-search.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
     UserNotesComponent,
     MessagesComponent,
     DashboardComponent,
+    UserSearchComponent,
 
   ],
   imports: [

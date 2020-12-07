@@ -1,7 +1,7 @@
-//import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { ActivatedRoute } from '@angular/router';
+
 import { Location } from '@angular/common';
 import {BackendAppService} from '../backend-app.service';
 import { Note } from '../notes';
@@ -23,29 +23,27 @@ export class UserNotesComponent implements OnInit {
     this.getUser();
   }
 
+  /** haal user op uit http action */ //werkt
   getUser(): void {
-    const id = +this.route.snapshot.paramMap.get('id'); // nog GetUserById inbrengen in glitch
-    this.backendappService.getUsers()
-      .subscribe(user => this.user.id = id);
+    const id = +this.route.snapshot.paramMap.get('id'); 
+    this.backendappService.getUser(id).subscribe(user => this.user = user);
   }
+
+  getNote(): void {
+      const id = +this.route.snapshot.paramMap.get('id'); // nog GetNoteById inbrengen in glitch
+      this.backendappService.getNote(id).subscribe(note => this.note= note);
+    }
 
   getNotes(): void {
     this.backendappService.getNotes().subscribe((data) => {console.log(data);})
     }
-
-  getNote(): void {
-      const id = +this.route.snapshot.paramMap.get('id'); // nog GetNoteById inbrengen in glitch
-      this.backendappService.getNotes()
-        .subscribe(note => this.note.id = id);
-    }
-
+    
   goBack(): void {
     this.location.back();
   }
 
   save(): void {
-    this.backendappService.updateUser(this.user)
-      .subscribe(() => this.goBack());
+    this.backendappService.updateUser(this.user).subscribe(() => this.goBack());
   }
 
 

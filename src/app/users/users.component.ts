@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BackendAppService} from '../backend-app.service';
 import { User } from '../user';
-import { MessageService } from '../message.service';
 import { Injectable } from '@angular/core';
 
 @Component({
@@ -14,35 +13,32 @@ import { Injectable } from '@angular/core';
 
 
 export class UsersComponent implements OnInit {
-  users : User[];
+users: User[] = [];
 
 constructor(private backendappService: BackendAppService) { }
   
-ngOnInit(): void {
-    this.getUsers();
-    }
-  
-getUsers(): void {
-  this.backendappService.getUsers().subscribe((data) => {console.log(data);})
-    //this.backendappService.getUsers().subscribe(users => this.users = users);
+  ngOnInit() {
+      this.getUsers();
+      }
+
+
+  getUsers(): void {
+    this.backendappService.getUsers().subscribe(users => this.users = users);
+      }
+
+  add(name: string): void {
+    name = name.trim();
+      if (!name) { return; }   //push veranderen omdat backend message meegeeft met user name. 
+                            //of geef user terug in glitch
+      this.backendappService.postUsers(name).subscribe((result) => {console.log(result);});
   }
-
-
-    add(username: string): void {
-    username = username.trim();
-    if (!username) { return; }
-    this.backendappService.postUsers({ username } as User)
-      .subscribe(user => {this.users.push(user);
+      
+  delete(name : string): void {
+      this.backendappService.deleteUser(name).subscribe((result)=> {
+        this.backendappService.getUsers().subscribe(users => this.users = users);
       });
-    }
-    
-  delete(user: User): void {
-    this.users = this.users.filter(u => u !== user);
-    this.backendappService.deleteUser(user.id).subscribe();
+      
   }
 
-
-
-
-  }
+}
 

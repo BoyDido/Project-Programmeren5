@@ -8,29 +8,31 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root'})
 export class BackendAppService {
-    constructor(private http: HttpClient, private messageService: MessageService) { }
 
-    // werkt wel met  'https://jensjorisdecorte-backend-example-5.glitch.me/'
-    private usersUrl = 'https://boydido-ubiquitous-distinct-friday.glitch.me/';  // URL to web api
-    private notesUrl = 'https://glitch.com/~ubiquitous-distinct-friday';  // URL to web api
+    private usersUrl = 'https://ubiquitous-distinct-friday.glitch.me';  // URL to web api
+    private notesUrl = 'https://ubiquitous-distinct-friday.glitch.me';  // URL to web api
     
     httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-  
-    
-    getUsers =() :Observable<User[]> => {
-      return this.http.get<User[]>(`${this.usersUrl}/users`).pipe(tap(_ => this.log('fetched users')),
+
+    constructor(private http: HttpClient, private messageService: MessageService) { }
+
+    getUsers =()  => {
+      return this.http.get<User[]>(`${this.usersUrl}/users`)
+      .pipe(tap(_ => this.log('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
-      ); 
+      );
     }
     
-    getUser(id: number): Observable<User> {
-      return this.http.get<User>(`${this.usersUrl}/${id}`).pipe(
+
+    getUser = (id: number): Observable<User> => {
+      return this.http.get<User>(`${this.usersUrl}/user?id=${id}`).pipe(
         tap(_ => this.log(`fetched user id=${id}`)),
         catchError(this.handleError<User>(`getUser id=${id}`))
       );
     }
+ 
 
       /** PUT: update the user on the server */
     updateUser(user: User): Observable<any> {
@@ -40,18 +42,17 @@ export class BackendAppService {
       );
     }
 
-    postUsers = (user: User) =>  {
-      return this.http.post<User>(`${this.usersUrl}/users`, user).pipe(
-        tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
-        catchError(this.handleError<User>('addUser'))
-      );
+    postUsers = (name: string) =>  {
+      return this.http.post(`${this.usersUrl}/users`, { 'name': name})
+      // .pipe(
+      //   tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
+      //   catchError(this.handleError<User>('addUser')))
+      ;
     }
     
-    deleteUser(user: User | number): Observable<User>{
-      const id = typeof user === 'number' ? user : user.id;
-      const url = '${this.usersUrl}/${id}';
-      return this.http.delete<User>(url, this.httpOptions).pipe(
-        tap(_ => this.log(`deleted user id=${id}`)),
+    deleteUser = (name : string): Observable<User> =>{
+      return this.http.get<User>(`${this.usersUrl}/remove?name=${name}`).pipe(
+        tap(_ => this.log(`deleted user name=${name}`)),
         catchError(this.handleError<User>('deleteUser'))
         );
     }
@@ -106,6 +107,20 @@ export class BackendAppService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  /* GET users whose name contains search term */
+  searchUsers(term: string): Observable<User[]> {
+    if (!term.trim()) {
+      // if not search term, return empty user array.
+      return of([]);
+    }
+    return this.http.get<User[]>(`${this.usersUrl}/?name=${term}`).pipe(
+      tap(x => x.length ?
+         this.log(`found users matching "${term}"`) :
+         this.log(`no users matching "${term}"`)),
+      catchError(this.handleError<User[]>('searchUsers', []))
+    );
   }
 
 

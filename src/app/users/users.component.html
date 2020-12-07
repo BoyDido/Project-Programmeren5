@@ -10,13 +10,14 @@
   </button>
 </div>
 
-<ul class='users'>
+<ul class="users">
   <li *ngFor="let user of users" >
-    <a routerLink="/user-notes/{{user.id}}">
-      <span class="badge">{{user.id}}</span> {{user.username}} 
+  <div style="display: table;">
+    <a routerLink="/user-notes/{{user.id}}" style="display: table-row;">
+      <span class="badge">{{user.id}}</span> {{user.name}} 
     </a> 
     <button class="delete" title="delete user"
-      (click)="delete(user)">x</button>
+      (click)="delete(user)">x</button></div>
   </li>
 </ul>
 
