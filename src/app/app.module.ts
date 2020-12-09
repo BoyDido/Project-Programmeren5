@@ -9,6 +9,24 @@ import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserSearchComponent } from './user-search/user-search.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MaterialModule } from './material.module';
+import { NotesComponent } from './notes/notes.component';
+import { MatSelectModule } from '@angular/material/select'; 
+import { MatInputModule  } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatRadioModule } from '@angular/material/radio'; 
+
+
 
 @NgModule({
   declarations: [
@@ -18,15 +36,32 @@ import { UserSearchComponent } from './user-search/user-search.component';
     MessagesComponent,
     DashboardComponent,
     UserSearchComponent,
-
+    NavBarComponent,
+    NotesComponent,
+  
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-  ],
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MaterialModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatRadioModule,
+    ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

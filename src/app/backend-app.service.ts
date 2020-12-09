@@ -10,7 +10,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class BackendAppService {
 
     private usersUrl = 'https://ubiquitous-distinct-friday.glitch.me';  // URL to web api
-    private notesUrl = 'https://ubiquitous-distinct-friday.glitch.me';  // URL to web api
     
     httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,39 +17,21 @@ export class BackendAppService {
 
     constructor(private http: HttpClient, private messageService: MessageService) { }
 
-    getUsers =()  => {
+    getUsers =()  => {   // werkt
       return this.http.get<User[]>(`${this.usersUrl}/users`)
       .pipe(tap(_ => this.log('fetched users')),
         catchError(this.handleError<User[]>('getUsers', []))
       );
     }
     
-
-    getUser = (id: number): Observable<User> => {
+    getUser = (id: number): Observable<User> => {   // werkt
       return this.http.get<User>(`${this.usersUrl}/user?id=${id}`).pipe(
         tap(_ => this.log(`fetched user id=${id}`)),
         catchError(this.handleError<User>(`getUser id=${id}`))
       );
     }
  
-
-      /** PUT: update the user on the server */
-    updateUser(user: User): Observable<any> {
-      return this.http.put((this.usersUrl), user).pipe(
-        tap(_ => this.log(`updated user id=${user.id}`)),
-        catchError(this.handleError<any>('updateUser'))
-      );
-    }
-
-    postUsers = (name: string) =>  {
-      return this.http.post(`${this.usersUrl}/users`, { 'name': name})
-      // .pipe(
-      //   tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
-      //   catchError(this.handleError<User>('addUser')))
-      ;
-    }
-    
-    deleteUser = (name : string): Observable<User> =>{
+    deleteUser = (name : string): Observable<User> =>{ // werkt
       console.log(name);
       return this.http.get<User>(`${this.usersUrl}/remove?name=${name}`).pipe(
         tap(_ => this.log(`deleted user name=${name}`)),
@@ -58,9 +39,25 @@ export class BackendAppService {
         );
     }
 
-    getNotes =() => {
-      return this.http.get<Note[]>(this.notesUrl).pipe(tap(_ => this.log('fetched notes')),
-        catchError(this.handleError<User[]>('getNotes', []))
+      /** PUT: update the user on the server */ // werkt
+    updateUser= (name: string): Observable<User> => {
+      return this.http.put<User>(`${this.usersUrl}/users`, {'name': name}).pipe(
+        tap(_ => this.log(`updated user ${name}`)),
+        catchError(this.handleError<any>('updateUser'))
+      );
+    }
+
+    postUsers = (name: string) =>  {   // werkt
+      return this.http.post(`${this.usersUrl}/users`, { 'name': name}).pipe(
+        tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
+        catchError(this.handleError<User>('addUser'))
+        );
+    }
+    
+    getNotes = (id : number) => {  //om te testen
+      return this.http.get<Note[]>(`${this.usersUrl}/notes?id=${id}`)
+        .pipe(tap(_ => this.log('fetched notes')),
+        catchError(this.handleError<Note[]>('getNotes', []))
       ); 
     }
 
@@ -71,18 +68,26 @@ export class BackendAppService {
       );
     }
 
-    postNotes(note: any):Observable<any> {
-      return this.http.post(this.usersUrl, note)
-    }
+    postNotes = (note: string, categorie : string, name: string) =>  {
+      return this.http.post(`${this.usersUrl}/users/notes`, { 'content': note, 'categorie': categorie, 'name': name}).pipe(
+        tap((newNote: Note) => this.log(`added note w/ id=${newNote.id}`)),
+        catchError(this.handleError<Note>('addNote'))
+        );
+      }
     
-    patchNote(adjustNote){ 
-      return this.http.patch(this.usersUrl, adjustNote)
-    }
+    updateNote(note: Note): Observable<any> {
+        return this.http.put((this.usersUrl), note).pipe(
+          tap(_ => this.log(`updated note id=${note.id}`)),
+          catchError(this.handleError<any>('updateNote'))
+        );
+      }
 
-    deleteNote(id: number): Observable<{}>{
-      const urlbase = (this.usersUrl);
-      const url = urlbase + '/' + [id];
-      return this.http.delete(url);
+    deleteNote = (id : number): Observable<Note> =>{ 
+      console.log(id);
+      return this.http.get<Note>(`${this.usersUrl}/remove?id=${id}`).pipe(
+        tap(_ => this.log(`deleted note id=${id}`)),
+        catchError(this.handleError<Note>('deleteNote'))
+        );
     }
 
   /** Log a UserService message with the MessageService */

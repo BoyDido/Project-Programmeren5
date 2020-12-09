@@ -28,19 +28,14 @@ constructor(private backendappService: BackendAppService) { }
 
   add(name: string): void {
     name = name.trim();
-      if (!name) { return; }   //push veranderen omdat backend message meegeeft met user name. 
-                            //of geef user terug in glitch
-      this.backendappService.postUsers(name).subscribe((result) => {console.log(result);});
+      if (!name) { return; } 
+      this.backendappService.postUsers(name).subscribe((result) => {console.log(result);
+        this.backendappService.getUsers().subscribe(users => this.users = users);});
   }
       
   delete(name : string): void {
       this.backendappService.deleteUser(name).subscribe((result)=> {
-        console.log(result);
-        this.backendappService.getUsers().subscribe(users => {this.users = users; 
-          console.log(users)})
-        
-      });
-      
+        console.log(result);});
   }
 
 }

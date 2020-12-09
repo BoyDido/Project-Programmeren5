@@ -1,0 +1,39 @@
+  <div>
+    <h2>Add Note:</h2>
+
+       <mat-form-field appearance="fill"  >
+        <mat-label>Categorie</mat-label>
+        <mat-select [(ngModel)]="gekozenOptie">
+          <mat-option *ngFor="let optie of opties" [value]="optie">
+            {{optie}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>You selected: {{gekozenOptie}}</p>
+    
+    <div>
+      <label>Note:
+        <input #notetext placeholder="text..." />
+      </label>  
+    </div>  
+    <button mat-raised-button color="primary" (click)="add(notetext.value, gekozenOptie, model.name); notetext.value=''">
+        Add
+    </button>
+  <div style="padding-top: 20px;">
+    <h2>Usernotes:</h2>
+    <h3 style="color: blue ;">{{model.name}} </h3>
+    <div>
+    <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
+        <div>
+            <label>Notes:{{model.id}}
+                <div><textarea text="note.notetext" placeholder="note..."></textarea>
+                  <a (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
+                  <a (click)="delete(note.id)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
+                </div>
+            </label>
+        </div>
+      <!-- </li> -->
+        <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
+  </div>
+</div>
+

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-//import { UrlSegmentGroup } from '@angular/router';
-//import { userInfo } from 'os';
 import {BackendAppService} from './backend-app.service';
-//import { UserNotesComponent } from './user-notes/user-notes.component';
-//import { UsersComponent } from './users/users.component';
+
 
 
 @Component({

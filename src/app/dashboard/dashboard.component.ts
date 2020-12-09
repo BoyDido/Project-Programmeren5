@@ -12,11 +12,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(private backendappService: BackendAppService) { }
 
-  ngOnInit() {
+  /** bij initialisatie vraag alle users op */  //werkt
+  ngOnInit() {  
     this.getUsers();
   }
 
-  getUsers(): void {
+   /** ontvang alle users van de http action en hou de 4 eerste in de rij */ //werkt
+   getUsers(): void {
     this.backendappService.getUsers()
       .subscribe(users => this.users = users.slice(0, 4));
   }

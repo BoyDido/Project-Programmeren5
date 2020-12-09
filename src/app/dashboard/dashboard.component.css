@@ -15,12 +15,13 @@ a {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-h3 {
+h2 {
   text-align: center;
   margin-bottom: 0;
 }
 h4 {
   position: relative;
+  margin:0;
 }
 .grid {
   margin: 0;
@@ -31,10 +32,12 @@ h4 {
 .module {
   padding: 20px;
   text-align: center;
+
   color: #eee;
   max-height: 120px;
   min-width: 120px;
-  background-color: #3f525c;
+  background-color: grey;
+  font-size: xx-large;
   border-radius: 2px;
 }
 .module:hover {

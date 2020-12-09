@@ -12,10 +12,14 @@ import { Note } from '../notes';
   styleUrls: ['./user-notes.component.css']
 })
 
+
+
+
 export class UserNotesComponent implements OnInit {
   user: User;
   note: Note;
-  
+  notes: Note[];
+
   constructor(  private route: ActivatedRoute, private backendappService: BackendAppService,
     private location: Location) { }
 
@@ -29,23 +33,11 @@ export class UserNotesComponent implements OnInit {
     this.backendappService.getUser(id).subscribe(user => {this.user = user; console.log(user)});
   }
 
-  getNote(): void {
-      const id = +this.route.snapshot.paramMap.get('id'); // nog GetNoteById inbrengen in glitch
-      this.backendappService.getNote(id).subscribe(note => this.note= note);
-    }
-
-  getNotes(): void {
-    this.backendappService.getNotes().subscribe((data) => {console.log(data);})
-    }
-    
-  goBack(): void {
+   goBack(): void {
     this.location.back();
   }
 
   save(): void {
-    this.backendappService.updateUser(this.user).subscribe(() => this.goBack());
+    this.backendappService.updateUser(this.user.name).subscribe(() => this.goBack());
   }
-
-
-
 }
