@@ -40,8 +40,8 @@ export class BackendAppService {
     }
 
       /** PUT: update the user on the server */ // werkt
-    updateUser= (name: string): Observable<User> => {
-      return this.http.put<User>(`${this.usersUrl}/users`, {'name': name}).pipe(
+    updateUser= (name: string, id: number) => {
+      return this.http.put<User>(`${this.usersUrl}/users?id=${id}`, {'name': name}).pipe(
         tap(_ => this.log(`updated user ${name}`)),
         catchError(this.handleError<any>('updateUser'))
       );
@@ -68,7 +68,7 @@ export class BackendAppService {
       );
     }
 
-    postNotes = (note: string, categorie : string, name: string) =>  {
+    postNotes = (note: string, categorie: string, name: string) =>  {
       return this.http.post(`${this.usersUrl}/users/notes`, { 'content': note, 'categorie': categorie, 'name': name}).pipe(
         tap((newNote: Note) => this.log(`added note w/ id=${newNote.id}`)),
         catchError(this.handleError<Note>('addNote'))
@@ -84,7 +84,7 @@ export class BackendAppService {
 
     deleteNote = (id : number): Observable<Note> =>{ 
       console.log(id);
-      return this.http.get<Note>(`${this.usersUrl}/remove?id=${id}`).pipe(
+      return this.http.get<Note>(`${this.usersUrl}/deleteNote?id=${id}`).pipe(
         tap(_ => this.log(`deleted note id=${id}`)),
         catchError(this.handleError<Note>('deleteNote'))
         );
@@ -121,7 +121,7 @@ export class BackendAppService {
       // if not search term, return empty user array.
       return of([]);
     }
-    return this.http.get<User[]>(`${this.usersUrl}/?name=${term}`).pipe(
+    return this.http.get<User[]>(`${this.usersUrl}/users/?name=${term}`).pipe(
       tap(x => x.length ?
          this.log(`found users matching "${term}"`) :
          this.log(`no users matching "${term}"`)),
@@ -129,8 +129,19 @@ export class BackendAppService {
     );
   }
 
-
-
+  /* GET notes whose user or categorie or content contains search term */
+  searchNotes(term: string, categorie:string, name: string): Observable<Note[]> {
+    if (!term.trim()) {
+      // if not search term, return empty notes array.
+      return of([]);
+    }
+    return this.http.get<Note[]>(`${this.usersUrl}/notes/?term=${term}&categorie=${categorie}&name=${name}`)
+      .pipe(tap(x => x.length ?
+         this.log(`found notes matching "${term} or ${categorie} or ${name}"`) :
+         this.log(`no notes matching "${term} or ${categorie} or ${name}"`)),
+      catchError(this.handleError<Note[]>('searchUsers', []))
+    );
+  }
 }
 
 

@@ -4,6 +4,8 @@ import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserNotesComponent } from './user-notes/user-notes.component';
 import { NotesComponent } from './notes/notes.component';
+import { NotesSearchComponent } from './notes-search/notes-search.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -11,6 +13,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-notes/:id', component: UserNotesComponent },
   { path: 'notes', component: NotesComponent },
+  { path: 'notes-search', component: NotesSearchComponent },
 ];
 
 @NgModule({

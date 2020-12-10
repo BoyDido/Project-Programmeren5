@@ -1,0 +1,65 @@
+<div style="min-height: 250px;">
+    <div style="padding-left: 50px;">
+    <h2>Search Notes</h2>
+    </div>
+    <div style="padding-left: 50px; float: left; min-width: 30%;">
+        <h3>Select user:</h3>
+        <mat-form-field appearance="fill"   >
+        <mat-label>User</mat-label>
+        <mat-select [(ngModel)]="gekozenUser">
+        <mat-option *ngFor="let user of users" [value]="user.name">
+            {{user.name}}
+        </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p>You selected: <b>{{gekozenUser}}</b></p>
+    </div>
+
+    <div style="min-width: 30%; float:left"  >
+        <h3>Select categorie:</h3>
+        <mat-form-field appearance="fill" >
+            <mat-label>Categorie</mat-label>
+            <mat-select [(ngModel)]="gekozenCategorie">
+                <mat-option *ngFor="let categorie of categories" [value]="categorie">
+                    {{categorie}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p [ngClass] ="gekozenCategorie" *ngIf="gekozenCategorie >= ''">You selected: <b>{{gekozenCategorie}}</b></p>
+    </div>
+
+    <div id="search-component" style="min-width: 30%; float:left" >
+        <h3>Search term:</h3>
+        <div>
+            <input #searchBox [(ngModel)]="term" id="search-box" (input)="search(searchBox.value)" />
+            <p>You selected: <b>{{term}}</b></p>
+        </div>   
+        <ul class="search-result">
+            <li *ngFor="let note of notes$ | async" >
+            <a routerLink="/detail/{{note.id}}">
+                {{note.notetext}}
+            </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+    <div style="margin-left: 50px;" >
+        <div *ngIf="gekozenUser !== '--'">
+            <h3>This is the result of your chosen searchterms: <br/> 
+               <span style="color: darkblue;">  {{gekozenUser}}, {{gekozenCategorie}}, {{term}}.</span></h3>
+            <div>
+                <ul style="padding-left: 0px;">
+            <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
+                    <label>Notes: <!--<p [ngClass] ="note.categorie"> {{note.categorie}}</p> -->
+                        <div><textarea class ="info" [ngClass] ="textareaclass"  text="note.notetext" placeholder="note..."></textarea>
+                            <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
+                            <a (click)="delete(5)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
+                            <a [hidden]="isShow" (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">save</span></a>
+                        </div>  <!-- bij textarea de class vervangen door ng class en info vervangen door note.categorie-->
+                    </label>
+              <!--</li> -->
+                </ul>
+            </div>
+          </div>
+    </div>

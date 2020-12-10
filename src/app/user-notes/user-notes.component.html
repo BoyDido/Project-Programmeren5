@@ -1,46 +1,23 @@
-<div class="col-md-12" >
-    <div   style="padding-left: 50px; min-width: 30%; float:left; max-width: 50%;">
-    <h2>Update userdetails</h2>
-    <h3 style="color: blue ;">{{user.name}} </h3>
-    <div><span style="font-weight: bold;">Id:  </span>{{user.id}}</div>
-    <div>
-        <label>Username:
-            <input [(ngModel)]="user.name" placeholder="name..."/>
-        </label>
-    </div>
-    <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
-    </div>
-<div style="min-width: 30%; float:left" >
-    <app-notes [model]="user"></app-notes>
-</div>
-<div style="float:left; min-width: 30%;">
-    <app-messages ></app-messages>
-</div>
-    
-    <!-- <div>
-        <h2>AddNote:</h2>
+<div class="col-md-12 " >
+     <div   style="padding-left: 50px; min-width: 30%; float:left; max-width: 50%;">
+        <h2>Update userdetails</h2>
+        <h3 style="color: blue ;">{{user.name}} </h3>
+        <div><span style="font-weight: bold;">Id:  </span>{{user.id}}</div>
         <div>
-          <label>Note:
-            <input #notetext placeholder="text..." />
-          </label>  
-        </div>  
-        <button mat-raised-button color="primary" (click)="addnote(notetext.value); notetext.value=''">
-            Add
-        </button>
-    
-        <button mat-raised-button color="primary" (click)="Shownotes">
-            ShowNotes
-        </button>
-      <h2>Usernotes</h2>
-      <h3 style="color: blue ;">{{user.name}} </h3>
-      <div><span style="font-weight: bold;">Id:  </span>{{user.id}}</div>
-      <div>
-          <label>Usernotes:
-              <input [(ngModel)]="note.note" placeholder="note..."/>
-          </label>
-      </div>
-      <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
-      <button mat-raised-button color="primary" (click)="save()">Save</button>
-    </div> -->
+            <label>Username:
+                <div>
+                    <input [disabled]="editUserInput" [(ngModel)]="user.name" [ngClass] ="inputclass" placeholder="name..." />
+                    <a [hidden]="isShowEdit" (click)="EditUser()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
+                    <a (click)="delete(user.name)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
+                    <a [hidden]="isShow" (click)="updateUser(user.name)" style="cursor: pointer;"><span class="material-icons">save</span></a>
+                </div>
+            </label>
+        </div>
+        <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
+    </div>
+    <div style="float:left; min-width: 30%;">
+        <app-messages ></app-messages>
+    </div>
+
 </div>
+

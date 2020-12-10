@@ -1,39 +1,57 @@
-  <div>
-    <h2>Add Note:</h2>
+  <div style="padding-left: 50px; float: left; min-width: 50%;">
+    <h2>User Notes:</h2>
 
-       <mat-form-field appearance="fill"  >
-        <mat-label>Categorie</mat-label>
-        <mat-select [(ngModel)]="gekozenOptie">
-          <mat-option *ngFor="let optie of opties" [value]="optie">
-            {{optie}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p>You selected: {{gekozenOptie}}</p>
-    
-    <div>
-      <label>Note:
-        <input #notetext placeholder="text..." />
-      </label>  
-    </div>  
-    <button mat-raised-button color="primary" (click)="add(notetext.value, gekozenOptie, model.name); notetext.value=''">
-        Add
-    </button>
-  <div style="padding-top: 20px;">
-    <h2>Usernotes:</h2>
-    <h3 style="color: blue ;">{{model.name}} </h3>
-    <div>
-    <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
-        <div>
-            <label>Notes:{{model.id}}
-                <div><textarea text="note.notetext" placeholder="note..."></textarea>
-                  <a (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
-                  <a (click)="delete(note.id)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
-                </div>
-            </label>
-        </div>
-      <!-- </li> -->
-        <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
-  </div>
+    <mat-form-field appearance="fill"   >
+     <mat-label>User</mat-label>
+     <mat-select [(ngModel)]="gekozenUser">
+       <mat-option *ngFor="let user of users" [value]="user.name">
+         {{user.name}}
+       </mat-option>
+     </mat-select>
+   </mat-form-field>
+   <p>You selected: <b>{{gekozenUser}}</b> </p>
+
+   
+    <div [hidden]="!gekozenUser">
+         <div>
+          <ul style="padding-left: 0px;">
+      <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
+              <label>Notes: <!--<p [ngClass] ="note.categorie"> {{note.categorie}}</p> -->
+                  <div><textarea [ngClass] ="textareaclass"  text="note.notetext" placeholder="note..."></textarea>
+                      <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
+                      <a (click)="delete(5)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
+                      <a [hidden]="isShow" (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">save</span></a>
+                  </div>  <!-- bij textarea de class vervangen door ng class en info vervangen door note.categorie-->
+              </label>
+        <!--</li> -->
+          </ul>
+      </div>
+    </div>
 </div>
 
+<div style="min-width: 30%; float:left"  >
+  <h2>Add Note:</h2>
+  <mat-form-field appearance="fill" *ngIf="gekozenUser >= ''" >
+      <mat-label>Categorie</mat-label>
+      <mat-select [(ngModel)]="gekozenCategorie">
+          <mat-option *ngFor="let categorie of categories" [value]="categorie">
+              {{categorie}}
+          </mat-option>
+      </mat-select>
+  </mat-form-field>
+  <p *ngIf="gekozenCategorie >= ''">You selected: <span [ngClass] ="gekozenCategorie" >{{gekozenCategorie}}</span></p>
+  <p class="Dringend" [hidden]="gekozenUser">
+    Please select User. </p>
+  <p class="Dringend" [hidden]="gekozenCategorie" *ngIf="gekozenUser >= ''" >
+      Categorie is required! </p>
+  <div *ngIf="gekozenCategorie >= ''">
+      <div>
+          <label>Note:
+              <textarea #notetext [ngClass] ="gekozenCategorie" [(ngModel)]="text" placeholder="your note..." ></textarea>
+          </label>  
+      </div>  
+      <button mat-raised-button [disabled]="!text" color="primary" (click)="add(notetext.value, gekozenCategorie, user.name); notetext.value=''">
+          Add
+      </button>
+  </div>
+</div>

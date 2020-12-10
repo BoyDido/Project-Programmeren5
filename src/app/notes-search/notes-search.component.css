@@ -1,4 +1,4 @@
-/* UserSearch private styles */
+/* NotesSearch private styles */
 
 .search-result li {
     border-bottom: 1px solid gray;
@@ -30,9 +30,11 @@
   }
   #search-box {
     margin-top: 5px ;
-    height: 2em;
+    height: 3em;
+    width: 15em;
     font-size: 1em;
     padding-left: .4em;
+    margin-bottom: 1.34375em;
   }
   ul.search-result {
     margin-top: 0;
@@ -40,10 +42,14 @@
   }
   label {
     display: inline-block;
-    width: 3em;
-    margin: 10px 0;
-    margin-top: 20px;
+    width: 5em;
     color: #607D8B;
     font-weight: bold;
   }
   
+  textarea {
+    width: 800px;
+    height: 125px;
+    overflow: auto;
+    
+  }

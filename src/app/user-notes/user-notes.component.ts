@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { ActivatedRoute } from '@angular/router';
-
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Location } from '@angular/common';
 import {BackendAppService} from '../backend-app.service';
 import { Note } from '../notes';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-user-notes',
@@ -19,9 +21,15 @@ export class UserNotesComponent implements OnInit {
   user: User;
   note: Note;
   notes: Note[];
+  categories : string[] = ['Privé', 'Dringend', 'Common', 'Info'];
+  gekozenCategorie : string;
+  inputclass : string;
+  isShow = true;
+  isShowEdit = false;
+  editUserInput = true;
 
   constructor(  private route: ActivatedRoute, private backendappService: BackendAppService,
-    private location: Location) { }
+    private location: Location, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -37,7 +45,31 @@ export class UserNotesComponent implements OnInit {
     this.location.back();
   }
 
-  save(): void {
-    this.backendappService.updateUser(this.user.name).subscribe(() => this.goBack());
+  EditUser(): void {
+    this.isShow = !this.isShow;
+    this.isShowEdit = !this.isShowEdit;
+    this.editUserInput = !this.editUserInput;
   }
+
+  updateUser(name: string): void {
+    const id = +this.route.snapshot.paramMap.get('id'); 
+    this.backendappService.updateUser(name, id).subscribe();
+    this.isShow = !this.isShow;
+    this.isShowEdit = !this.isShowEdit;
+   }
+
+  delete(name : string): void {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Remove User',
+        message: 'Are you sure, you want to remove user: ' + name
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.backendappService.deleteUser(name).subscribe((result)=> {
+          console.log(result);});}
+    });
+  }
+
 }

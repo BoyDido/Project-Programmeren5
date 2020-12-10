@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
@@ -24,7 +24,10 @@ import { MatInputModule  } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatRadioModule } from '@angular/material/radio'; 
+import { MatRadioModule } from '@angular/material/radio';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'; 
+import { MatDialogModule } from '@angular/material/dialog';
+import { NotesSearchComponent } from './notes-search/notes-search.component';
 
 
 
@@ -38,11 +41,14 @@ import { MatRadioModule } from '@angular/material/radio';
     UserSearchComponent,
     NavBarComponent,
     NotesComponent,
+    ConfirmDialogComponent,
+    NotesSearchComponent,
   
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -59,9 +65,13 @@ import { MatRadioModule } from '@angular/material/radio';
     MatPaginatorModule,
     MatSortModule,
     MatRadioModule,
+    MatDialogModule,
     ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [
+    ConfirmDialogComponent
+  ],
 
 })
 export class AppModule { }

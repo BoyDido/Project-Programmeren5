@@ -1,6 +1,6 @@
 
 <div style="padding-left: 50px; float: left; min-width: 20%;">
-  <h2>My Users</h2>
+  <h2>Add User</h2>
   <div>
     <label>Username:
       <input #username placeholder="name..." />
@@ -12,7 +12,9 @@
   <app-user-search></app-user-search>
 </div>
 
-<div style="float:left; min-width: 30%; padding-top: 20px;" >
+<div style="float:left; min-width: 30%;" >
+  <h2>My Users</h2>
+  <h5>Select to update user.</h5>
   <div class="col-md-12">
     <ul class="users">
       <li *ngFor="let user of users" >

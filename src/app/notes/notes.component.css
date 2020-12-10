@@ -1,27 +1,33 @@
   /* UserNotesComponent's private CSS styles */
-  .notesBox {
-    max-width: 50%;
-    border: black;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    padding: 5px;
-    margin: 15px 0px;
+  .Privé { border-color:orange; }
+  .Dringend { border-color: red; }
+  .Common { border-color: green; }
+  .Info { border-color: blue; }
+  
+  span.Privé { color: orange; }
+  span.Dringend { color: red; }
+  span.Common { color: green; }
+  span.Info { color: blue; }
+
+  .disabled {
+    opacity: 0.3;
+    pointer-events: none;
   }
 
-  .example-radio-group {
-    display: flex;
-    flex-direction: column;
-    margin: 15px 0;
+  .enabled {
+    opacity: 1;
   }
+
+  textarea {
+  width: 600px;
+  height: 200px;
+  overflow: auto;
   
-  .example-radio-button {
-    margin: 5px;
-  }
+}
 
 label {
     display: inline-block;
-    width: 3em;
+    width: 10em;
     margin: 10px 0;
     color: #607D8B;
     font-weight: bold;

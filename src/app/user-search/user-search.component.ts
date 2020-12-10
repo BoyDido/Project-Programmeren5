@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-
-import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
-
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import {User} from '../user';
 import {BackendAppService} from '../backend-app.service';
 
@@ -14,11 +10,12 @@ import {BackendAppService} from '../backend-app.service';
   templateUrl: './user-search.component.html',
   styleUrls: ['./user-search.component.css']
 })
+
 export class UserSearchComponent implements OnInit {
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
   
-  constructor(private backendAppService: BackendAppService) {}
+  constructor(private backendappService: BackendAppService) {}
     
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -34,7 +31,7 @@ export class UserSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.backendAppService.searchUsers(term)),
+      switchMap((term: string) => this.backendappService.searchUsers(term)),
     );
   }
 

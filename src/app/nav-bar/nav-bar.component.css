@@ -25,3 +25,8 @@ a {
 .mat-nav-list  a:hover {
   background-color: peru;
 }
+
+.home{
+  margin-top: 50%;
+  background-color: white;
+}
