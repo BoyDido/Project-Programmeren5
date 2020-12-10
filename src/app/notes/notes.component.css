@@ -5,12 +5,12 @@
   .Info { border-color: blue; }
   
   span.Privé { color: orange; }
-  span.Dringend { color: red; }
+  p.Dringend, span.Dringend { color: red; }
   span.Common { color: green; }
   span.Info { color: blue; }
 
   .disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     pointer-events: none;
   }
 

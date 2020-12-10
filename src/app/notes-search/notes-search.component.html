@@ -1,4 +1,5 @@
 <div style="min-height: 250px;">
+    
     <div style="padding-left: 50px;">
     <h2>Search Notes</h2>
     </div>
@@ -12,9 +13,10 @@
         </mat-option>
         </mat-select>
     </mat-form-field>
-    <p>You selected: <b>{{gekozenUser}}</b></p>
+    <p>You selected: <b>{{gekozenUser}}</b></p>    
+    <p class="Dringend" [hidden]="gekozenUser !== '--'" *ngIf="gekozenUser >= ''" >
+        User is required! </p>    
     </div>
-
     <div style="min-width: 30%; float:left"  >
         <h3>Select categorie:</h3>
         <mat-form-field appearance="fill" >
@@ -51,8 +53,8 @@
             <div>
                 <ul style="padding-left: 0px;">
             <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
-                    <label>Notes: <!--<p [ngClass] ="note.categorie"> {{note.categorie}}</p> -->
-                        <div><textarea class ="info" [ngClass] ="textareaclass"  text="note.notetext" placeholder="note..."></textarea>
+                    <label>Categorie: <!--<p [ngClass] ="note.categorie"> {{note.categorie}}</p> -->
+                        <div><textarea class ="Info" [ngClass] ="textareaclass"  text="note.notetext" placeholder="note..."></textarea>
                             <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
                             <a (click)="delete(5)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
                             <a [hidden]="isShow" (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">save</span></a>
@@ -62,4 +64,8 @@
                 </ul>
             </div>
           </div>
+        <div style="min-width: 30%;">
+            <app-messages ></app-messages>
+        </div>
     </div>
+  

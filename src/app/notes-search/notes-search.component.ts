@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './notes-search.component.html',
   styleUrls: ['./notes-search.component.css']
 })
+
 export class NotesSearchComponent implements OnInit {
   notes$: Observable<Note[]>;
   private searchTerms = new Subject<string>();
@@ -38,7 +39,8 @@ export class NotesSearchComponent implements OnInit {
     this.getUsers();
     this.gekozenCategorie = "--";
     this.gekozenUser="--";
-    this.textareaclass= "disabled"
+    this.textareaclass= "disabled";
+    if (this.gekozenUser !== "--"){
     this.notes$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
@@ -49,38 +51,40 @@ export class NotesSearchComponent implements OnInit {
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.backendAppService.searchNotes
             (term, this.gekozenCategorie, this.gekozenUser)),
-    );
-    
+    );}
   }
 
   getUsers(): void {
     this.backendAppService.getUsers().subscribe(users => this.users = users);
-      }
+  }
 
-      EditNote(): void {
-        this.textareaclass="enabled"
-        this.isShow = !this.isShow;
-        this.isShowEdit = !this.isShowEdit;
+  EditNote(): void {
+    this.textareaclass="enabled"
+    this.isShow = !this.isShow;
+    this.isShowEdit = !this.isShowEdit;
+  }
+    
+  delete(id : number): void {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+      title: 'Confirm Remove Note',
+      message: 'Are you sure, you want to remove note: ' + id
       }
-
-      delete(id : number): void {
-        const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
-          data: {
-            title: 'Confirm Remove Note',
-            message: 'Are you sure, you want to remove note: ' + id
-          }
-        });
+      });
         confirmDialog.afterClosed().subscribe(result => {
           if (result === true) {
             this.backendAppService.deleteNote(id).subscribe((result)=> {
-              console.log(result);});}
-        });
-      }
+              console.log(result);
+            });
+          }
+      });
+  }
     
-      updateNote(): void {
-       this.backendAppService.updateNote(this.note).subscribe();
-       this.textareaclass="disabled"
-       this.isShow = !this.isShow;
-       this.isShowEdit = !this.isShowEdit;
-      }
+  updateNote(): void {
+    this.backendAppService.updateNote(this.note).subscribe();
+    this.textareaclass="disabled"
+    this.isShow = !this.isShow;
+    this.isShowEdit = !this.isShowEdit;
+  }
+
 }
