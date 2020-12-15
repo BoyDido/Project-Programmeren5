@@ -138,6 +138,7 @@ export class BackendAppService {
       );
     }
 
+ 
     /* GET notes whose user or categorie or content contains search term */
     searchNotes(term: string): Observable<Note[]> {
       console.log(term);
@@ -146,10 +147,10 @@ export class BackendAppService {
         return of([]);
       }
       return this.http.get<Note[]>(`${this.usersUrl}/notesSearch?term=${term}`)
-        .pipe(tap(x => x.length ?
+        .pipe(tap(x =>{ x.length ?
           this.log(`found notes matching "${term}"`) :
-          this.log(`no notes matching "${term}"`)),
-        catchError(this.handleError<Note[]>('searchUsers', []))
+          this.log(`no notes matching "${term}"`); console.log(x)}),
+        catchError(this.handleError<Note[]>('searchNotes', []))
       );
     }
 }

@@ -20,6 +20,7 @@ export class NotesSearchComponent implements OnInit {
   notes: Note[] = [];
   filteredNotes: Note[] = [];
   notesFromUser: Note[] = [];
+  filteredNotesOfUser: Note[] = [];
   errorMessage: string;
   note: Note;
   user : User;
@@ -30,6 +31,7 @@ export class NotesSearchComponent implements OnInit {
   textareaclass : string;
   isShow = true;
   isShowEdit = false;
+  bool = false;
 
   constructor(private backendAppService: BackendAppService, private dialog: MatDialog) {}
 
@@ -41,7 +43,6 @@ export class NotesSearchComponent implements OnInit {
 
   ngOnInit() : void {
     this.getUsers();
-    //this.getNotes(2);
     this.gekozenCategorie = "--";
     this.gekozenUser="--";
     this.textareaclass= "disabled";
@@ -58,6 +59,11 @@ export class NotesSearchComponent implements OnInit {
     );}
   }
 
+  searchInNotesFromUser(zoekterm : string){
+    this.backendAppService.searchNotes(zoekterm).subscribe(filteredNotesOfUser => 
+      {console.log(filteredNotesOfUser); this.filteredNotesOfUser = filteredNotesOfUser})
+    this.bool = true;
+  }
     
   filterNotesFromUserOnCategorie(gekozenCategorie : string) : Note[]{
   this.filteredNotes = this.notesFromUser.filter(note => note.categorie === gekozenCategorie);
@@ -67,6 +73,7 @@ export class NotesSearchComponent implements OnInit {
 
   elementSelectionChange () : void{
     this.gekozenCategorie = "--";
+    this.bool= false;
   }
 
   elementSelectionChange2 (gekozenUser: string) : void{
@@ -79,7 +86,8 @@ export class NotesSearchComponent implements OnInit {
 
   getNotes(id : number): void {
     this.backendAppService.getNotes(id).subscribe(notesFromUser => 
-      {console.log(notesFromUser); this.notesFromUser = notesFromUser})
+      {console.log(notesFromUser); this.notesFromUser = notesFromUser; 
+        this.filteredNotesOfUser= notesFromUser})
     }
 
   getNotesFromUser(name: string) : void{

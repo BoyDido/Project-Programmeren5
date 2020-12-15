@@ -40,7 +40,7 @@ export class NotesComponent implements OnInit {
     this.textareaclass= "disabled"
   }
 
-  elementSelectionChange(name: string) {
+  GetUsersByName(name: string) {
     let value = this.users.find(x => x.name === name)
     console.log(value.id);
     this.getNotes(value.id);
@@ -81,7 +81,7 @@ export class NotesComponent implements OnInit {
   add(text: string, categorie: string, name: string): void {
       if (!text) { return; } 
       this.backendappService.postNotes(text, categorie, name).subscribe((result) => {console.log(result);
-        this.backendappService.getNotes(2).subscribe(notes => this.notes = notes);});
+        this.GetUsersByName(name);});
         this.notitie= "";
   }
 

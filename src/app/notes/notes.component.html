@@ -5,13 +5,14 @@
     <mat-form-field appearance="fill"   >
      <mat-label>User</mat-label>
      <mat-select [(ngModel)]="gekozenUser" >
-       <mat-option *ngFor="let user of users" [value]="user.name" (onSelectionChange)="elementSelectionChange(user.name)" >
+       <mat-option *ngFor="let user of users" [value]="user.name"  >
          {{user.name}}
        </mat-option>
      </mat-select>
    </mat-form-field>
    <p>You selected: <b>{{gekozenUser}}</b> </p>
-
+   <button mat-raised-button name="GetButton" [disabled]="!gekozenUser" color="primary" 
+     (click)="GetUsersByName(gekozenUser)"> Show Notes </button>
    
     <div [hidden]="!gekozenUser">
          <div>
@@ -63,9 +64,7 @@
             </label>  
         </div>  
         <button mat-raised-button name="addButton" [disabled]="!notitie" color="primary" 
-            (click)="add(notitie, gekozenCategorie, gekozenUser)">
-            Add
-        </button>
+            (click)="add(notitie, gekozenCategorie, gekozenUser)"> Add </button>
     </div>
   </div>
 </div>
