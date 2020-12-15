@@ -18,6 +18,9 @@ export class NotesSearchComponent implements OnInit {
   private searchTerms = new Subject<string>();
   gekozenUser: string;
   notes: Note[] = [];
+  filteredNotes: Note[] = [];
+  notesFromUser: Note[] = [];
+  errorMessage: string;
   note: Note;
   user : User;
   users : User[] = [];
@@ -29,7 +32,8 @@ export class NotesSearchComponent implements OnInit {
   isShowEdit = false;
 
   constructor(private backendAppService: BackendAppService, private dialog: MatDialog) {}
-    
+
+
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);
@@ -37,6 +41,7 @@ export class NotesSearchComponent implements OnInit {
 
   ngOnInit() : void {
     this.getUsers();
+    //this.getNotes(2);
     this.gekozenCategorie = "--";
     this.gekozenUser="--";
     this.textareaclass= "disabled";
@@ -49,13 +54,38 @@ export class NotesSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.backendAppService.searchNotes
-            (term, this.gekozenCategorie, this.gekozenUser)),
+      switchMap((term: string) => this.backendAppService.searchNotes(term)),
     );}
+  }
+
+    
+  filterNotesFromUserOnCategorie(gekozenCategorie : string) : Note[]{
+  this.filteredNotes = this.notesFromUser.filter(note => note.categorie === gekozenCategorie);
+        console.log(gekozenCategorie);console.log(this.filteredNotes);
+  return this.filteredNotes;
+}
+
+  elementSelectionChange () : void{
+    this.gekozenCategorie = "--";
+  }
+
+  elementSelectionChange2 (gekozenUser: string) : void{
+    this.getNotesFromUser(gekozenUser);console.log(gekozenUser);
   }
 
   getUsers(): void {
     this.backendAppService.getUsers().subscribe(users => this.users = users);
+  }
+
+  getNotes(id : number): void {
+    this.backendAppService.getNotes(id).subscribe(notesFromUser => 
+      {console.log(notesFromUser); this.notesFromUser = notesFromUser})
+    }
+
+  getNotesFromUser(name: string) : void{
+    this.backendAppService.getNotesFromUser(name).subscribe(notesFromUser => 
+      {console.log(notesFromUser); this.notesFromUser = notesFromUser;
+        this.filteredNotes = this.notesFromUser})
   }
 
   EditNote(): void {
@@ -64,7 +94,7 @@ export class NotesSearchComponent implements OnInit {
     this.isShowEdit = !this.isShowEdit;
   }
     
-  delete(id : number): void {
+  delete(id : number, userId: number): void {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
       title: 'Confirm Remove Note',
@@ -74,14 +104,14 @@ export class NotesSearchComponent implements OnInit {
         confirmDialog.afterClosed().subscribe(result => {
           if (result === true) {
             this.backendAppService.deleteNote(id).subscribe((result)=> {
-              console.log(result);
+              console.log(result); this.getNotes(userId);
             });
           }
       });
   }
     
-  updateNote(): void {
-    this.backendAppService.updateNote(this.note).subscribe();
+  updateNote(categorie: string, content: string, id: number): void {
+    this.backendAppService.updateNote(categorie, content, id).subscribe();
     this.textareaclass="disabled"
     this.isShow = !this.isShow;
     this.isShowEdit = !this.isShowEdit;

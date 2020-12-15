@@ -15,10 +15,15 @@ import { UsersComponent } from '../users/users.component';
 export class UserSearchComponent implements OnInit {
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
-
+  
 
   constructor(private backendappService: BackendAppService) {}
-    
+  
+ 
+  
+
+
+
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);

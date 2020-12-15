@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {BackendAppService} from '../backend-app.service';
 import { User } from '../user';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+
 
 @Component({
   selector: 'app-users',
@@ -15,7 +18,7 @@ import { Injectable } from '@angular/core';
 export class UsersComponent implements OnInit {
 users: User[] = [];
 
-constructor(private backendappService: BackendAppService) { }
+constructor(private backendappService: BackendAppService, private dialog: MatDialog) { }
   
   ngOnInit() {
       this.getUsers();
@@ -34,8 +37,18 @@ constructor(private backendappService: BackendAppService) { }
   }
       
   delete(name : string): void {
-      this.backendappService.deleteUser(name).subscribe((result)=> {
-        console.log(result);});
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Remove User',
+        message: 'Are you sure, you want to remove user: ' + name
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.backendappService.deleteUser(name).subscribe((result)=> {
+          console.log(result);});}; this.getUsers();
+    });
+    
   }
 
 }

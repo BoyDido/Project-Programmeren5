@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import {BackendAppService} from '../backend-app.service';
 import { Note } from '../notes';
 import { MatDialog } from '@angular/material/dialog';
+import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 
 export class UserNotesComponent implements OnInit {
+  users: User[] = [];
   user: User;
   note: Note;
   notes: Note[];
@@ -45,6 +47,10 @@ export class UserNotesComponent implements OnInit {
     this.location.back();
   }
 
+  getUsers(): void {
+    this.backendappService.getUsers().subscribe(users => this.users = users);
+      }
+
   EditUser(): void {
     this.isShow = !this.isShow;
     this.isShowEdit = !this.isShowEdit;
@@ -56,6 +62,7 @@ export class UserNotesComponent implements OnInit {
     this.backendappService.updateUser(name, id).subscribe();
     this.isShow = !this.isShow;
     this.isShowEdit = !this.isShowEdit;
+    this.editUserInput = !this.editUserInput;
    }
 
   delete(name : string): void {
@@ -68,8 +75,9 @@ export class UserNotesComponent implements OnInit {
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
         this.backendappService.deleteUser(name).subscribe((result)=> {
-          console.log(result);});}
+          console.log(result);});}; this.goBack(); this.getUsers();
     });
+    
   }
 
 }

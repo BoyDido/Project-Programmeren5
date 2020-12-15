@@ -4,8 +4,8 @@
 
     <mat-form-field appearance="fill"   >
      <mat-label>User</mat-label>
-     <mat-select [(ngModel)]="gekozenUser">
-       <mat-option *ngFor="let user of users" [value]="user.name">
+     <mat-select [(ngModel)]="gekozenUser" >
+       <mat-option *ngFor="let user of users" [value]="user.name" (onSelectionChange)="elementSelectionChange(user.name)" >
          {{user.name}}
        </mat-option>
      </mat-select>
@@ -15,16 +15,24 @@
    
     <div [hidden]="!gekozenUser">
          <div>
-          <ul style="padding-left: 0px;">
-      <!-- <li *ngFor="let note of notes"><span style="font-weight: bold;">Id:  </span>{{note.id}}> -->
-              <label>Categorie: <!--<p [ngClass] ="note.categorie"> {{note.categorie}}</p> -->
-                  <div><textarea class="Info" [ngClass] ="textareaclass"  text="note.notetext" placeholder="note..."></textarea>
-                      <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
-                      <a (click)="delete(5)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
-                      <a [hidden]="isShow" (click)="updateNote()" style="cursor: pointer;"><span class="material-icons">save</span></a>
-                  </div>  <!-- bij textarea de class vervangen door [ngClass]= en info vervangen door "note.categorie"-->
-              </label>
-        <!--</li> -->
+            <ul style="padding-left: 0px;">
+              <li *ngFor="let note of notes">
+                <div style="display: table;">
+                  <label><p>Categorie: <span [ngClass] ="note.categorie">{{note.categorie}} 
+                            </span>NoteId: {{note.id}}</p> 
+                      <div style="display: table;">
+                        <textarea [ngClass] ="[note.categorie, textareaclass]" placeholder="note..." 
+                            [(ngModel)]="note.content">{{note.content}}</textarea>
+                          <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
+                                <span class="material-icons">create</span></a> 
+                          <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
+                                <span class="material-icons">delete_forever</span></a> 
+                          <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)" 
+                                style="cursor: pointer;"><span class="material-icons">save</span></a>
+                      </div> 
+                  </label>
+                </div>
+            </li> 
           </ul>
       </div>
     </div>  
@@ -51,10 +59,11 @@
     <div *ngIf="gekozenCategorie >= ''">
         <div>
             <label>Note:
-                <textarea #notetext [ngClass] ="gekozenCategorie" [(ngModel)]="text" placeholder="your note..." ></textarea>
+                <textarea [(ngModel)]="notitie" name="notitie" [ngClass] ="gekozenCategorie"  placeholder="your note..." ></textarea>
             </label>  
         </div>  
-        <button mat-raised-button [disabled]="!text" color="primary" (click)="add(notetext.value, gekozenCategorie, user.name); notetext.value=''">
+        <button mat-raised-button name="addButton" [disabled]="!notitie" color="primary" 
+            (click)="add(notitie, gekozenCategorie, gekozenUser)">
             Add
         </button>
     </div>

@@ -30,3 +30,7 @@ a {
   margin-top: 50%;
   background-color: white;
 }
+
+button:hover {
+  background-color: #cfd8dc;
+}

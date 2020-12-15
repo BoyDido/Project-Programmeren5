@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../user';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 
 
 
@@ -22,39 +23,34 @@ export class NotesComponent implements OnInit {
   note: Note;
   user : User;
   users : User[] = [];
+  categorie: string;
   categories : string[] = ['Privé', 'Dringend', 'Common', 'Info'];
   gekozenCategorie: string;
   gekozenUser : string;
   textareaclass : string;
+  notitie : string;
   isShow = true;
   isShowEdit = false;
-
-// @Input() model: User;   
-//   updateModel() {
-//     this.model.id;
-//   }
 
   constructor(private route: ActivatedRoute, private backendappService: BackendAppService,  
     private location: Location, private dialog: MatDialog) { }
 
   ngOnInit() {
-    const id = 26;
-    this.backendappService.postNotes("dit is een note", "Privé", "dimi").subscribe((result)=> {console.log(result)
-    this.getNotes(id);});
     this.getUsers();
     this.textareaclass= "disabled"
+  }
+
+  elementSelectionChange(name: string) {
+    let value = this.users.find(x => x.name === name)
+    console.log(value.id);
+    this.getNotes(value.id);
   }
 
   getNotes(id : number): void {
     this.backendappService.getNotes(id).subscribe(notes => {console.log(notes); this.notes = notes});
       }
 
-  getNote(): void {
-    const id = +this.route.snapshot.paramMap.get('id'); 
-    this.backendappService.getNote(id).subscribe(note => this.note= note);
-  }
-
-  delete(id : number): void {
+  delete(id : number, userId: number): void {
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirm Remove Note',
@@ -64,7 +60,8 @@ export class NotesComponent implements OnInit {
     confirmDialog.afterClosed().subscribe(result => {
       if (result === true) {
         this.backendappService.deleteNote(id).subscribe((result)=> {
-          console.log(result);});}
+          console.log(result);this.getNotes(userId)
+        });}
     });
   }
 
@@ -74,18 +71,18 @@ export class NotesComponent implements OnInit {
     this.isShowEdit = !this.isShowEdit;
   }
 
-  updateNote(): void {
-   this.backendappService.updateNote(this.note).subscribe();
+  updateNote(categorie: string, content: string, id: number): void {
+   this.backendappService.updateNote(categorie, content, id).subscribe();
    this.textareaclass="disabled"
    this.isShow = !this.isShow;
    this.isShowEdit = !this.isShowEdit;
   }
 
-  add(note: string, categorie: string, name: string): void {
-    const id = +this.route.snapshot.paramMap.get('id'); 
-      if (!note) { return; } 
-      this.backendappService.postNotes(note, categorie, name).subscribe((result) => {console.log(result);
-        this.backendappService.getNotes(id).subscribe(notes => this.notes = notes);});
+  add(text: string, categorie: string, name: string): void {
+      if (!text) { return; } 
+      this.backendappService.postNotes(text, categorie, name).subscribe((result) => {console.log(result);
+        this.backendappService.getNotes(2).subscribe(notes => this.notes = notes);});
+        this.notitie= "";
   }
 
   getUsers(): void {
