@@ -1,15 +1,19 @@
 <div id="search-component" style="padding-top: 20px;">
+  
   <h2>Search Users</h2>
+
   <div>
     <label for="search-box">UserSearch:
       <input #searchBox id="search-box" (input)="search(searchBox.value)" />
     </label>
-  </div>   
-    <ul class="search-result">
-      <li *ngFor="let user of users$ | async" >
-        <a routerLink="/user-notes/{{user.id}}">
-          {{user.name}}
-        </a>
-      </li>
-    </ul>
   </div>
+
+  <ul class="search-result">
+    <li *ngFor="let user of users$ | async">
+      <a routerLink="/user-notes/{{user.id}}">
+        {{user.name}}
+      </a>
+    </li>
+  </ul>
+
+</div>

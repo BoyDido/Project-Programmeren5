@@ -1,147 +1,148 @@
 <div style="min-height: 320px;">
-    
+
     <div style="padding-left: 50px;">
-    <h2>Search Notes</h2>
+        <h2>Search Notes</h2>
     </div>
     <div style="padding-left: 50px; float: left; min-width: 30%;">
         <h3>Select user:</h3>
-        <mat-form-field appearance="fill"   >
-        <mat-label>User</mat-label>
-        <mat-select [(ngModel)]="gekozenUser">
-        <mat-option *ngFor="let user of users" [value]="user.name" 
-            (onSelectionChange)="elementSelectionChange()">
-            {{user.name}}
-        </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <p>You selected: <b>{{gekozenUser}}</b></p>    
-    <p class="Dringend" [hidden]="gekozenUser !== '--'" *ngIf="gekozenUser >= ''" >
-        User is required! </p> 
+        <mat-form-field appearance="fill">
+            <mat-label>User</mat-label>
+            <mat-select [(ngModel)]="gekozenUser">
+                <mat-option *ngFor="let user of users" [value]="user.name"
+                    (onSelectionChange)="elementSelectionChange()">
+                    {{user.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p>You selected: <b>{{gekozenUser}}</b></p>
+        <p class="Dringend" [hidden]="gekozenUser !== '--'" *ngIf="gekozenUser >= ''">
+            User is required! </p>
         <div *ngIf="gekozenUser !== '--'">
-        <button mat-raised-button color="primary" (click)="getNotesFromUser(gekozenUser)"
-                *ngIf="gekozenCategorie == '--'" >
-            Search All
-        </button> </div>
+            <button mat-raised-button color="primary" (click)="getNotesFromUser(gekozenUser)"
+                *ngIf="gekozenCategorie == '--'">
+                Search All
+            </button>
+        </div>
     </div>
 
-
-    <div style="min-width: 30%; float:left"  >
+    <div style="min-width: 30%; float:left">
         <h3>Select categorie:</h3>
-        <div *ngIf="gekozenUser !== '--'" >
-            <mat-form-field appearance="fill"   >
+        <div *ngIf="gekozenUser !== '--'">
+            <mat-form-field appearance="fill">
                 <mat-label>Categorie</mat-label>
                 <mat-select [(ngModel)]="gekozenCategorie">
-                    <mat-option *ngFor="let categorie of categories" [value]="categorie" 
+                    <mat-option *ngFor="let categorie of categories" [value]="categorie"
                         (onSelectionChange)="elementSelectionChange2(gekozenUser)">
                         {{categorie}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <p *ngIf="gekozenCategorie >= ''">You selected: <span [ngClass] ="gekozenCategorie" >{{gekozenCategorie}}</span></p>
+            <p *ngIf="gekozenCategorie >= ''">You selected: <span
+                    [ngClass]="gekozenCategorie">{{gekozenCategorie}}</span></p>
             <p class="Dringend" [hidden]="gekozenUser">
-            Please select User. </p>
-            <p class="Dringend" [hidden]="gekozenCategorie" *ngIf="gekozenUser >= ''" >
+                Please select User. </p>
+            <p class="Dringend" [hidden]="gekozenCategorie" *ngIf="gekozenUser >= ''">
                 Categorie is required! </p>
             <button mat-raised-button color="primary" (click)="filterNotesFromUserOnCategorie(gekozenCategorie)"
                 *ngIf="gekozenCategorie !== '--'">
                 Search
-            </button> 
+            </button>
         </div>
     </div>
 
-
-
-    <div id="search-component" style="min-width: 30%; float:left" >
+    <div id="search-component" style="min-width: 30%; float:left">
         <h3>Search term:</h3>
         <div>
-            <input #searchBox [(ngModel)]="term" id="search-box"  />
+            <input #searchBox [(ngModel)]="term" id="search-box" />
             <p>You selected: <b>{{term}}</b></p>
-            <button mat-raised-button color="primary" (click)="searchInNotesFromUser(term)"
+            <button mat-raised-button color="primary" (click)="searchInNotesFromUser(term, gekozenUser)"
                 *ngIf="gekozenUser !== '--'">
                 Search View
-            </button> 
-        </div>   
-        <ul class="search-result">
-            <li *ngFor="let note of notes$ | async" >
-                <a routerLink="/user-notes">
-                    {{user.name}}
-                  </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-
-    <div style="margin-left: 50px;" >
-        <div>
-            <h3>This is the result of your chosen searchterms: <br/> 
-               <span style="color: darkblue;">  {{gekozenUser}}, {{gekozenCategorie}}, {{term}}.</span></h3>
-            <div *ngIf="gekozenUser !== '--' && gekozenCategorie == '--' " [hidden]=bool>
-                <ul style="padding-left: 0px;">
-                    <li *ngFor="let note of notesFromUser">
-                        <div style="display: table;">
-                            <label><p>Categorie: <span [ngClass] ="note.categorie">{{note.categorie}} 
-                            </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p> 
-                                <div style="display: table;">
-                                    <textarea class ="Info" [ngClass] ="textareaclass"  placeholder="note..."
-                                        > {{note.content}}</textarea>
-                                    <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
-                                        <span class="material-icons">create</span></a> 
-                                    <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
-                                        <span class="material-icons">delete_forever</span></a> 
-                                    <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)" 
-                                            style="cursor: pointer;"><span class="material-icons">save</span></a>
-                                </div>  
-                            </label>
-                        </div>
-                    </li> 
-                </ul>
-            </div>
-            <div *ngIf="gekozenCategorie !== '--' ">
-                <ul style="padding-left: 0px;">
-                    <li *ngFor="let note of filteredNotes">
-                        <div style="display: table;">
-                            <label><p>Categorie: <span [ngClass] ="note.categorie">{{note.categorie}} 
-                            </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p> 
-                                <div style="display: table;">
-                                    <textarea class ="Info" [ngClass] ="textareaclass"  placeholder="note..."
-                                        > {{note.content}}</textarea>
-                                    <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
-                                        <span class="material-icons">create</span></a> 
-                                    <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
-                                        <span class="material-icons">delete_forever</span></a> 
-                                    <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)" 
-                                            style="cursor: pointer;"><span class="material-icons">save</span></a>
-                                </div>  
-                            </label>
-                        </div>
-                    </li> 
-                </ul>
-            </div>
-            <div *ngIf="term >= '' " [hidden]=!bool>
-                <ul style="padding-left: 0px;">
-                    <li *ngFor="let note of filteredNotesOfUser">
-                        <div style="display: table;">
-                            <label><p>Categorie: <span [ngClass] ="note.categorie">{{note.categorie}} 
-                            </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p> 
-                                <div style="display: table;">
-                                    <textarea class ="Info" [ngClass] ="textareaclass"  placeholder="note..."
-                                        > {{note.content}}</textarea>
-                                    <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
-                                        <span class="material-icons">create</span></a> 
-                                    <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
-                                        <span class="material-icons">delete_forever</span></a> 
-                                    <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)" 
-                                            style="cursor: pointer;"><span class="material-icons">save</span></a>
-                                </div>  
-                            </label>
-                        </div>
-                    </li> 
-                </ul>
-            </div>
-          </div>
-        <div style="min-width: 30%;">
-            <app-messages ></app-messages>
+            </button>
         </div>
     </div>
-  
+
+</div>
+
+<div style="margin-left: 50px;">
+    <div>
+        <h3>This is the result of your chosen searchterms: <br />
+            <span style="color: darkblue;"> {{gekozenUser}}, {{gekozenCategorie}}, {{term}}.</span>
+        </h3>
+
+        <div *ngIf="gekozenUser !== '--' && gekozenCategorie == '--' " [hidden]=bool>
+            <ul style="padding-left: 0px;">
+                <li *ngFor="let note of notesFromUser">
+                    <div style="display: table;">
+                        <label>
+                            <p>Categorie: <span [ngClass]="note.categorie">{{note.categorie}}
+                                </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p>
+                            <div style="display: table;">
+                                <textarea class="Info" [ngClass]="textareaclass"
+                                    placeholder="note..."> {{note.content}}</textarea>
+                                <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
+                                    <span class="material-icons">create</span></a>
+                                <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
+                                    <span class="material-icons">delete_forever</span></a>
+                                <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)"
+                                    style="cursor: pointer;"><span class="material-icons">save</span></a>
+                            </div>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="gekozenCategorie !== '--' " [hidden]=bool>
+            <ul style="padding-left: 0px;">
+                <li *ngFor="let note of filteredNotes">
+                    <div style="display: table;">
+                        <label>
+                            <p>Categorie: <span [ngClass]="note.categorie">{{note.categorie}}
+                                </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p>
+                            <div style="display: table;">
+                                <textarea class="Info" [ngClass]="textareaclass"
+                                    placeholder="note..."> {{note.content}}</textarea>
+                                <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
+                                    <span class="material-icons">create</span></a>
+                                <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
+                                    <span class="material-icons">delete_forever</span></a>
+                                <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)"
+                                    style="cursor: pointer;"><span class="material-icons">save</span></a>
+                            </div>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div *ngIf="term >= '' " [hidden]=!bool>
+            <ul style="padding-left: 0px;">
+                <li *ngFor="let note of filteredNotesOfUser">
+                    <div style="display: table;">
+                        <label>
+                            <p>Categorie: <span [ngClass]="note.categorie">{{note.categorie}}
+                                </span>NoteId: {{note.id}}, UserId: {{note.userId}}</p>
+                            <div style="display: table;">
+                                <textarea class="Info" [ngClass]="textareaclass"
+                                    placeholder="note..."> {{note.content}}</textarea>
+                                <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
+                                    <span class="material-icons">create</span></a>
+                                <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
+                                    <span class="material-icons">delete_forever</span></a>
+                                <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)"
+                                    style="cursor: pointer;"><span class="material-icons">save</span></a>
+                            </div>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div style="min-width: 30%;">
+        <app-messages></app-messages>
+    </div>
+
+</div>

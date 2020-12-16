@@ -19,17 +19,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MaterialModule } from './material.module';
 import { NotesComponent } from './notes/notes.component';
-import { MatSelectModule } from '@angular/material/select'; 
-import { MatInputModule  } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'; 
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NotesSearchComponent } from './notes-search/notes-search.component';
-
-
 
 @NgModule({
   declarations: [
@@ -43,7 +41,6 @@ import { NotesSearchComponent } from './notes-search/notes-search.component';
     NotesComponent,
     ConfirmDialogComponent,
     NotesSearchComponent,
-  
   ],
   imports: [
     BrowserModule,
@@ -66,7 +63,7 @@ import { NotesSearchComponent } from './notes-search/notes-search.component';
     MatSortModule,
     MatRadioModule,
     MatDialogModule,
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [

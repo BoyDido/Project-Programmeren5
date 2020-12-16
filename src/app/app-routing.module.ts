@@ -6,7 +6,6 @@ import { UserNotesComponent } from './user-notes/user-notes.component';
 import { NotesComponent } from './notes/notes.component';
 import { NotesSearchComponent } from './notes-search/notes-search.component';
 
-
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'users', component: UsersComponent },
@@ -20,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

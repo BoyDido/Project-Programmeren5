@@ -1,9 +1,20 @@
-/* NotesSearch private styles */
+/* NotesSearch private Css styles */
 
-p.Privé, span.Privé { color: orange; }
-p.Dringend, span.Dringend { color: red; }
-p.Common, span.Common { color: green; }
-p.Info, span.Info { color: blue; }
+p.Privé, span.Privé {
+  color: orange;
+}
+
+p.Dringend, span.Dringend {
+  color: red;
+}
+
+p.Common, span.Common {
+  color: green;
+}
+
+p.Info, span.Info {
+  color: blue;
+}
 
 .disabled {
   opacity: 0.5;
@@ -21,54 +32,55 @@ textarea {
 }
 
 .search-result li {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    width: 195px;
-    height: 16px;
-    padding: 5px;
-    background-color: white;
-    cursor: pointer;
-    list-style-type: none;
-  }
-  
-  .search-result li:hover {
-    background-color: #607D8B;
-  }
-  
-  .search-result li a {
-    color: #888;
-    display: block;
-    text-decoration: none;
-  }
-  
-  .search-result li a:hover {
-    color: white;
-  }
-  .search-result li a:active {
-    color: white;
-  }
-  #search-box {
-    height: 3em;
-    width: 15em;
-    font-size: 1em;
-    padding-left: .4em;
-    margin-bottom: 1.34375em;
-  }
-  ul.search-result {
-    margin-top: 0;
-    padding-left: 0;
-  }
+  border-bottom: 1px solid gray;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  width: 195px;
+  height: 16px;
+  padding: 5px;
+  background-color: white;
+  cursor: pointer;
+  list-style-type: none;
+}
 
-  ul {
-    list-style-type: none;
-  }
+.search-result li:hover {
+  background-color: #607D8B;
+}
 
-  label {
-    display: inline-block;
-    width: 10em;
-    color: #607D8B;
-    font-weight: bold;
-  }
-  
- 
+.search-result li a {
+  color: #888;
+  display: block;
+  text-decoration: none;
+}
+
+.search-result li a:hover {
+  color: white;
+}
+
+.search-result li a:active {
+  color: white;
+}
+
+#search-box {
+  height: 3em;
+  width: 15em;
+  font-size: 1em;
+  padding-left: .4em;
+  margin-bottom: 1.34375em;
+}
+
+ul.search-result {
+  margin-top: 0;
+  padding-left: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+label {
+  display: inline-block;
+  width: 10em;
+  color: #607D8B;
+  font-weight: bold;
+}

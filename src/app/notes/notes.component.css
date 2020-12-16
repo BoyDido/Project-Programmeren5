@@ -1,19 +1,42 @@
   /* UserNotesComponent's private CSS styles */
-  .Privé { border-color:orange; }
-  .Dringend { border-color: red; }
-  .Common { border-color: green; }
-  .Info { border-color: blue; }
-  
-  p.Privé, span.Privé { color: orange; }
-  p.Dringend, span.Dringend { color: red; }
-  p.Common, span.Common { color: green; }
-  p.Info, span.Info { color: blue; }
+
+  .Privé {
+    border-color: orange;
+  }
+
+  .Dringend {
+    border-color: red;
+  }
+
+  .Common {
+    border-color: green;
+  }
+
+  .Info {
+    border-color: blue;
+  }
+
+  p.Privé, span.Privé {
+    color: orange;
+  }
+
+  p.Dringend, span.Dringend {
+    color: red;
+  }
+
+  p.Common, span.Common {
+    color: green;
+  }
+
+  p.Info, span.Info {
+    color: blue;
+  }
 
   .disabled {
     opacity: 0.5;
     pointer-events: none;
   }
-  
+
   ul {
     list-style-type: none;
   }
@@ -23,25 +46,26 @@
   }
 
   textarea {
-  width: 400px;
-  height: 100px;
-  overflow: auto;
-  
-}
+    width: 400px;
+    height: 100px;
+    overflow: auto;
+  }
 
-label {
+  label {
     display: inline-block;
     width: 10em;
     margin: 10px 0;
     color: #607D8B;
     font-weight: bold;
   }
+
   input {
-    margin-top: 5px ;
+    margin-top: 5px;
     height: 2em;
     font-size: 1em;
     padding-left: .4em;
   }
+
   button {
     margin-top: 20px;
     margin-left: 10px;
@@ -53,9 +77,11 @@ label {
     border-radius: 4px;
     cursor: pointer;
   }
+
   button:hover {
     background-color: #cfd8dc;
   }
+
   button:disabled {
     background-color: #eee;
     color: #ccc;

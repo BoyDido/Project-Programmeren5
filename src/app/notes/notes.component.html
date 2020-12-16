@@ -2,71 +2,71 @@
   <div style="padding-left: 50px; float: left; min-width: 50%;">
     <h2>User Notes:</h2>
 
-    <mat-form-field appearance="fill"   >
-     <mat-label>User</mat-label>
-     <mat-select [(ngModel)]="gekozenUser" >
-       <mat-option *ngFor="let user of users" [value]="user.name"  >
-         {{user.name}}
-       </mat-option>
-     </mat-select>
-   </mat-form-field>
-   <p>You selected: <b>{{gekozenUser}}</b> </p>
-   <button mat-raised-button name="GetButton" [disabled]="!gekozenUser" color="primary" 
-     (click)="GetUsersByName(gekozenUser)"> Show Notes </button>
-   
+    <mat-form-field appearance="fill">
+      <mat-label>User</mat-label>
+      <mat-select [(ngModel)]="gekozenUser">
+        <mat-option *ngFor="let user of users" [value]="user.name">
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>You selected: <b>{{gekozenUser}}</b> </p>
+    <button mat-raised-button name="GetButton" [disabled]="!gekozenUser" color="primary"
+      (click)="GetUsersByName(gekozenUser)"> Show Notes </button>
+
     <div [hidden]="!gekozenUser">
-         <div>
-            <ul style="padding-left: 0px;">
-              <li *ngFor="let note of notes">
+      <div>
+        <ul style="padding-left: 0px;">
+          <li *ngFor="let note of notes">
+            <div style="display: table;">
+              <label>
+                <p>Categorie: <span [ngClass]="note.categorie">{{note.categorie}}
+                  </span>NoteId: {{note.id}}</p>
                 <div style="display: table;">
-                  <label><p>Categorie: <span [ngClass] ="note.categorie">{{note.categorie}} 
-                            </span>NoteId: {{note.id}}</p> 
-                      <div style="display: table;">
-                        <textarea [ngClass] ="[note.categorie, textareaclass]" placeholder="note..." 
-                            [(ngModel)]="note.content">{{note.content}}</textarea>
-                          <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
-                                <span class="material-icons">create</span></a> 
-                          <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
-                                <span class="material-icons">delete_forever</span></a> 
-                          <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)" 
-                                style="cursor: pointer;"><span class="material-icons">save</span></a>
-                      </div> 
-                  </label>
+                  <textarea [ngClass]="[note.categorie, textareaclass]" placeholder="note..."
+                    [(ngModel)]="note.content">{{note.content}}</textarea>
+                  <a [hidden]="isShowEdit" (click)="EditNote()" style="cursor: pointer;">
+                    <span class="material-icons">create</span></a>
+                  <a (click)="delete(note.id, note.userId)" style="cursor: pointer;">
+                    <span class="material-icons">delete_forever</span></a>
+                  <a [hidden]="isShow" (click)="updateNote(note.categorie, note.content, note.id)"
+                    style="cursor: pointer;"><span class="material-icons">save</span></a>
                 </div>
-            </li> 
-          </ul>
+              </label>
+            </div>
+          </li>
+        </ul>
       </div>
-    </div>  
+    </div>
     <div style="min-width: 30%">
-    <app-messages ></app-messages>
+      <app-messages></app-messages>
     </div>
   </div>
 
-  <div style="min-width: 30%; float:left"  >
+  <div style="min-width: 30%; float:left">
     <h2>Add Note:</h2>
-    <mat-form-field appearance="fill" *ngIf="gekozenUser >= ''" >
-        <mat-label>Categorie</mat-label>
-        <mat-select [(ngModel)]="gekozenCategorie">
-            <mat-option *ngFor="let categorie of categories" [value]="categorie">
-                {{categorie}}
-            </mat-option>
-        </mat-select>
+    <mat-form-field appearance="fill" *ngIf="gekozenUser >= ''">
+      <mat-label>Categorie</mat-label>
+      <mat-select [(ngModel)]="gekozenCategorie">
+        <mat-option *ngFor="let categorie of categories" [value]="categorie">
+          {{categorie}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-    <p *ngIf="gekozenCategorie >= ''">You selected: <span [ngClass] ="gekozenCategorie" >{{gekozenCategorie}}</span></p>
+    <p *ngIf="gekozenCategorie >= ''">You selected: <span [ngClass]="gekozenCategorie">{{gekozenCategorie}}</span></p>
     <p class="Dringend" [hidden]="gekozenUser">
       Please select User. </p>
-    <p class="Dringend" [hidden]="gekozenCategorie" *ngIf="gekozenUser >= ''" >
-        Categorie is required! </p>
+    <p class="Dringend" [hidden]="gekozenCategorie" *ngIf="gekozenUser >= ''">
+      Categorie is required! </p>
     <div *ngIf="gekozenCategorie >= ''">
-        <div>
-            <label>Note:
-                <textarea [(ngModel)]="notitie" name="notitie" [ngClass] ="gekozenCategorie"  placeholder="your note..." ></textarea>
-            </label>  
-        </div>  
-        <button mat-raised-button name="addButton" [disabled]="!notitie" color="primary" 
-            (click)="add(notitie, gekozenCategorie, gekozenUser)"> Add </button>
+      <div>
+        <label>Note:
+          <textarea [(ngModel)]="notitie" name="notitie" [ngClass]="gekozenCategorie"
+            placeholder="your note..."></textarea>
+        </label>
+      </div>
+      <button mat-raised-button name="addButton" [disabled]="!notitie" color="primary"
+        (click)="add(notitie, gekozenCategorie, gekozenUser)"> Add </button>
     </div>
   </div>
 </div>
-
-

@@ -1,41 +1,43 @@
 /* MessagesComponent's private CSS styles */
 
-  body {
-    margin: 2em;
-    margin-top: 25px;
-  }
-  body, input[text], button {
-    color: crimson;
-    font-family: Cambria, Georgia;
-  }
-  
-  button {
-    margin-top: 20px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    font-family: Arial;
-    font-weight: bold;
-    background-color: #eee;
-    border: none;
-    padding: 5px 5px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #cfd8dc;
-  }
-  button:disabled {
-    background-color: #eee;
-    color: #aaa;
-    cursor: auto;
-  }
+body {
+  margin: 2em;
+  margin-top: 25px;
+}
 
+body, input[text], button {
+  color: crimson;
+  font-family: Cambria, Georgia;
+}
 
-  .messagesBox {
-    max-width: 40%;
-    border: black;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
-    padding: 5px;
-  }
+button {
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-family: Arial;
+  font-weight: bold;
+  background-color: #eee;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+
+.messagesBox {
+  max-width: 40%;
+  border: black;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 5px;
+}

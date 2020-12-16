@@ -1,8 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar color="primary">Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard">Dashboard</a>
@@ -10,21 +9,21 @@
       <a mat-list-item routerLink="/notes">Notes</a>
       <a mat-list-item routerLink="/notes-search">Search Notes</a>
     </mat-nav-list>
-    <button mat-raised-button color="primary" style="margin-left: 30%; margin-top: 20px;"><a routerLink="/dashboard" style="cursor: pointer;">
+    <button mat-raised-button color="primary" style="margin-left: 30%; margin-top: 20px;"><a routerLink="/dashboard"
+        style="cursor: pointer;">
         <span class="material-icons home">home</span></a></button>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">Note-App</mat-icon>
       </button>
       <span>Project-Programmeren 5 : Tanghe.D.</span>
     </mat-toolbar>
-    <router-outlet></router-outlet> 
+
+    <router-outlet></router-outlet>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

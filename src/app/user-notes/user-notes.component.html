@@ -1,22 +1,28 @@
-<div class="col-md-12 " >
-     <div   style="padding-left: 50px; min-width: 30%; float:left; max-width: 50%;">
+<div class="col-md-12 ">
+    
+    <div style="padding-left: 50px; min-width: 30%; float:left; max-width: 50%;">
         <h2>Update userdetails</h2>
         <h3 style="color: blue ;">{{user.name}} </h3>
-        <div><span style="font-weight: bold;">Id:  </span>{{user.id}}</div>
+        <div><span style="font-weight: bold;">Id: </span>{{user.id}}</div>
         <div>
             <label>Username:
                 <div>
-                    <input [disabled]="editUserInput" [(ngModel)]="user.name" [ngClass] ="inputclass" placeholder="name..." />
-                    <a [hidden]="isShowEdit" (click)="EditUser()" style="cursor: pointer;"><span class="material-icons">create</span></a> 
-                    <a (click)="delete(user.name)" style="cursor: pointer;"><span class="material-icons">delete_forever</span></a> 
-                    <a [hidden]="isShow" (click)="updateUser(user.name)" style="cursor: pointer;"><span class="material-icons">save</span></a>
+                    <input [disabled]="editUserInput" [(ngModel)]="user.name" [ngClass]="inputclass"
+                        placeholder="name..." />
+                    <a [hidden]="isShowEdit" (click)="EditUser()" style="cursor: pointer;"><span
+                            class="material-icons">create</span></a>
+                    <a (click)="delete(user.name)" style="cursor: pointer;"><span
+                            class="material-icons">delete_forever</span></a>
+                    <a [hidden]="isShow" (click)="updateUser(user.name)" style="cursor: pointer;"><span
+                            class="material-icons">save</span></a>
                 </div>
             </label>
         </div>
         <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
     </div>
-    <div style="float:left; min-width: 30%;">
-        <app-messages ></app-messages>
-    </div>
-</div>
 
+    <div style="float:left; min-width: 30%;">
+        <app-messages></app-messages>
+    </div>
+
+</div>

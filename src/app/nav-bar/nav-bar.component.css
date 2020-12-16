@@ -1,3 +1,5 @@
+/* Nav-Bar Component's private CSS styles */
+
 .sidenav-container {
   height: 100%;
   background-color: rgb(243, 221, 202);
@@ -19,14 +21,14 @@
 }
 
 a {
- font-weight: bold;
+  font-weight: bold;
 }
 
-.mat-nav-list  a:hover {
+.mat-nav-list a:hover {
   background-color: peru;
 }
 
-.home{
+.home {
   margin-top: 50%;
   background-color: white;
 }

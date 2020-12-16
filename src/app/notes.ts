@@ -1,6 +1,6 @@
 export interface Note {
-    id: number;
-    content: string;
-    categorie: string;
-    userId: number;
-  }
+  id: number;
+  content: string;
+  categorie: string;
+  userId: number;
+}

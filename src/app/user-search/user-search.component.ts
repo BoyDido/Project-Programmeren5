@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import {User} from '../user';
-import {BackendAppService} from '../backend-app.service';
-import { UsersComponent } from '../users/users.component';
-
+import { User } from '../user';
+import { BackendAppService } from '../backend-app.service';
 
 @Component({
   selector: 'app-user-search',
@@ -15,22 +13,16 @@ import { UsersComponent } from '../users/users.component';
 export class UserSearchComponent implements OnInit {
   users$: Observable<User[]>;
   private searchTerms = new Subject<string>();
-  
 
-  constructor(private backendappService: BackendAppService) {}
-  
- 
-  
-
-
+  constructor(private backendappService: BackendAppService) { }
 
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);
   }
 
-  ngOnInit() : void {
-     this.users$ = this.searchTerms.pipe(
+  ngOnInit(): void {
+    this.users$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
